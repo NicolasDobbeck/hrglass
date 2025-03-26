@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequestMapping("/colaboradores")
 @RestController
 public class ColaboradorController {
     
@@ -18,20 +19,20 @@ public class ColaboradorController {
     private final List<Colaborador> repository = new ArrayList<>();
 
     // GET ALL
-    @GetMapping("/colaboradores")
+    @GetMapping
     public List<Colaborador> index() {
         return repository;
     }
 
     // GET BY ID
-    @GetMapping("/colaboradores/{id}")
+    @GetMapping("/{id}")
     public Colaborador getById(@PathVariable Long id) {
         log.info("Buscando colaborador por ID: " + id);
         return getColaborador(id);
     }
 
     // POST
-    @PostMapping("/colaboradores")
+    @PostMapping
     public ResponseEntity<Colaborador> create(@RequestBody Colaborador colaborador) {
         log.info("Cadastrando colaborador: " + colaborador.getNome());
         repository.add(colaborador);
@@ -39,7 +40,7 @@ public class ColaboradorController {
     }
 
     // DELETE
-    @DeleteMapping("/colaboradores/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         log.info("Removendo colaborador com ID: " + id);
@@ -47,7 +48,8 @@ public class ColaboradorController {
     }
 
     // PUT (Update)
-    @PutMapping("/colaboradores/{id}")
+    
+    @PutMapping("/{id}")
     public Colaborador update(@PathVariable Long id, @RequestBody Colaborador colaborador) {
         log.info("Atualizando colaborador com ID: " + id);
         repository.remove(getColaborador(id));
